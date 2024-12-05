@@ -99,11 +99,10 @@ public class ValidationConstants {
 
     public static final String APP_DESCRIPTION = "${appdescription}";
     public static final String APP_VERSION = "${appversion}";
-    public static final String MALFORMED_JWT = "Malformed JWT Exception";
-    public static final String JWT_TOKEN = "JWT Token";
     public static final String INVALID_JWT = "Invalid or malformed JWT token";
     public static final String INTERNAL_SERVER = "Internal server error occurred";
     public static final String OCCURRED_UNEXPECTED = "An unexpected error occurred";
+    public static final String EMAIL_VALID_FORMAT = "Email must be a valid format (e.g., user@example.com)";
     public static final String API_USERS = "API for user management";
     public static final String API_ROLES = "API for rol management";
 

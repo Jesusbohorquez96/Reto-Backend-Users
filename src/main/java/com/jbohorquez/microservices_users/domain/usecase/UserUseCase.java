@@ -69,7 +69,7 @@ public abstract class UserUseCase implements IUserServicePort {
     private void validateEmailStructure(String email) {
         List<String> allowedDomains = ValidationConstants.MAIL_VALIDATE;
         if (!email.contains(AT) || !email.contains(SPOT)) {
-            throw new IllegalArgumentException("Email must be a valid format (e.g., user@example.com)");
+            throw new IllegalArgumentException(EMAIL_VALID_FORMAT);
         }
         String domain = email.substring(email.indexOf(AT) + ONE, email.lastIndexOf(SPOT));
         if (!allowedDomains.contains(domain)) {
