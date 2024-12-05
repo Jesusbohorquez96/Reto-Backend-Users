@@ -6,10 +6,10 @@ public class Rol {
     private String name;
     private String description;
 
-    public Rol(String name, String description, Long id) {
+    public Rol(Long id, String name, String description) {
+        this.id = id;
         this.name = name;
         this.description = description;
-        this.id = id;
     }
 
     public Rol() {

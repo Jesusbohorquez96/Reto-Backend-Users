@@ -21,4 +21,7 @@ public class UserResponse {
 
     public UserResponse() {
     }
+
+    public UserResponse(long l, String john, String doe, String mail, String number) {
+    }
 }

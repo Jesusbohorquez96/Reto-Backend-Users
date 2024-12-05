@@ -32,6 +32,9 @@ public class User {
     public User(long l, String testUser, String mail, String password, String roleUser) {
     }
 
+    public User(long l, String john, String doe, String mail, String number, String password) {
+    }
+
     public Long getId() {
         return id;
     }
