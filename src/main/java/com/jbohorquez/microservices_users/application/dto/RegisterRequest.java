@@ -47,4 +47,11 @@ public class RegisterRequest {
         this.email = email;
         this.password = password;
     }
+
+    public RegisterRequest(String john, String doe, String mail, String password, String number, String date, long l) {
+    }
+
+    public RegisterRequest() {
+
+    }
 }

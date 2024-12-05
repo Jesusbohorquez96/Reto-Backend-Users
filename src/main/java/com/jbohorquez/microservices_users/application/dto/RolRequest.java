@@ -20,4 +20,10 @@ public class RolRequest {
     @NotBlank(message = DESCRIPTION_REQUIRED)
     @Size(max = MAX_LENGTH, message = DESCRIPTION_MAX_LENGTH_EXCEEDED)
     private String description;
+
+    public RolRequest(String admin, String administratorRole) {
+    }
+
+    public RolRequest() {
+    }
 }

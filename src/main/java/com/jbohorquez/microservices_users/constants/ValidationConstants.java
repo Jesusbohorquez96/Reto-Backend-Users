@@ -11,9 +11,11 @@ public class ValidationConstants {
     public static final int DECIMALS = 2;
     public static final int SEVEN = 7;
     public static final int INTEGERS = 10;
+    public static final int THREE = 13;
     public static final int MAYOR = 18;
     public static final int MAX_DOCUMENT = 20;
     public static final int NAME_MAX_LENGTH = 50;
+    public static final int MAX_LENGTH_SIXTY = 60;
     public static final int EMAIL_MAX_LENGTH = 50;
     public static final int DESCRIPTION_MAX_LENGTH = 90;
     public static final int MAX_LENGTH = 120;

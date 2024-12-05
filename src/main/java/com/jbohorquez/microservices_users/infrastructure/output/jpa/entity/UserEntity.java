@@ -28,11 +28,11 @@ public class UserEntity implements UserDetails {
     private Long id;
 
     @NotBlank(message = NAME_REQUIRED)
-    @Column(length = 50, nullable = false)
+    @Column(length = NAME_MAX_LENGTH, nullable = false)
     private String name;
 
     @NotBlank(message = LAST_NAME_REQUIRED)
-    @Column(length = 60, nullable = false)
+    @Column(length = MAX_LENGTH_SIXTY, nullable = false)
     private String lastName;
 
     @NotNull(message = ID_DOCUMENT_REQUIRED)
@@ -42,7 +42,7 @@ public class UserEntity implements UserDetails {
 
     @NotBlank(message = PHONE_REQUIRED)
     @Pattern(regexp = PHONE_NUMBER, message = PHONE_INVALID)
-    @Column(length = 13, nullable = false)
+    @Column(length = THREE, nullable = false)
     private String phone;
 
     @NotNull(message = BIRTHDATE_REQUIRED)
@@ -52,7 +52,7 @@ public class UserEntity implements UserDetails {
 
     @NotBlank(message = EMAIL_REQUIRED)
     @Email(message = EMAIL_INVALID_FORMAT)
-    @Column(length = 60, nullable = false, unique = true)
+    @Column(length =MAX_LENGTH_SIXTY, nullable = false, unique = true)
     private String email;
 
     @NotBlank(message = PASSWORD_REQUIRED)
@@ -61,6 +61,9 @@ public class UserEntity implements UserDetails {
     @ManyToOne
     @JoinColumn(name = ROL_ID_LIST, nullable = false)
     private RolEntity rol;
+
+    public UserEntity(long l, String john, String doe, String mail, String password, String number) {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
