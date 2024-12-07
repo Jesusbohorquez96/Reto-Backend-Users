@@ -1,6 +1,6 @@
 package com.jbohorquez.microservices_users.infrastructure.output.jpa.entity;
 
-import com.jbohorquez.microservices_users.application.validation.Adult;
+import com.jbohorquez.microservices_users.domain.validation.Adult;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

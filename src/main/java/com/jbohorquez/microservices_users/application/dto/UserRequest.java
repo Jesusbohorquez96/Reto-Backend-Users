@@ -1,6 +1,6 @@
 package com.jbohorquez.microservices_users.application.dto;
 
-import com.jbohorquez.microservices_users.application.validation.Adult;
+import com.jbohorquez.microservices_users.domain.validation.Adult;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

@@ -14,11 +14,10 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
-import static com.jbohorquez.microservices_users.constants.ValidationConstants.*;
-
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService implements IAuthenticationService {
+
     private final IUserRepository repository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -35,7 +34,6 @@ public class AuthenticationService implements IAuthenticationService {
                             request.getPassword()
                     )
             );
-
         String jwtToken = jwtService.generate(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -44,9 +42,6 @@ public class AuthenticationService implements IAuthenticationService {
 
     @Override
     public void register(RegisterRequest registerRequest) {
-        if (registerRequest.getRol() == null) {
-            throw new IllegalArgumentException(ROL_ID_NULL);
-        }
         RolEntity rol = RolEntity.builder()
                 .id(registerRequest.getRol())
                 .build();
@@ -61,11 +56,10 @@ public class AuthenticationService implements IAuthenticationService {
                 .rol(rol)
                 .build();
         repository.save(user);
-        UserEntity savedUser = repository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new IllegalStateException(USER_NOT_FOUND_SAVING));
+        user = repository.findByEmail(user.getEmail()).orElseThrow();
 
-        String jwtToken = jwtService.generate(savedUser);
-        AuthenticationResponse response = AuthenticationResponse.builder()
+        String jwtToken = jwtService.generate(user);
+        AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
