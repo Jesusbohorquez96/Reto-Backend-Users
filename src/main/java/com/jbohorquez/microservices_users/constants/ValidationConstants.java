@@ -67,8 +67,6 @@ public class ValidationConstants {
     public static final String USER_MUST_BE_ADULT = "User must be at least 18 years old";
     public static final String USER_NOT_FOUND = "User must be an adult";
     public static final String USER_NOT_FOUND_MESSAGE = "User not found";
-    public static final String ROL_ID_NULL = "Role ID cannot be null";
-    public static final String USER_NOT_FOUND_SAVING = "User not found after saving";
 
     public static final String USER_ID_TARGET = "userId";
     public static final String USER_NAME_TARGET = "userName";
@@ -118,6 +116,7 @@ public class ValidationConstants {
     public static final String ROLES_API = "/roles";
     public static final String LOGIN = "/login";
     public static final String AUTH_API = "/auth";
+    public static final String VALIDATE_OWNER = "/validate-owner/{ownerId}";
 
     public static final String USERS_API = "/users";
     public static final String REGISTER_ADMIN = "/register_admin";

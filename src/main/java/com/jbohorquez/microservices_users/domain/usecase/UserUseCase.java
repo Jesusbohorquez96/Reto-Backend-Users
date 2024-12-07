@@ -2,6 +2,7 @@ package com.jbohorquez.microservices_users.domain.usecase;
 
 import com.jbohorquez.microservices_users.application.dto.AuthenticationRequest;
 import com.jbohorquez.microservices_users.application.dto.AuthenticationResponse;
+import com.jbohorquez.microservices_users.application.dto.OwnerResponse;
 import com.jbohorquez.microservices_users.application.dto.RegisterRequest;
 import com.jbohorquez.microservices_users.constants.ValidationConstants;
 import com.jbohorquez.microservices_users.domain.api.IUserServicePort;
@@ -37,6 +38,11 @@ public abstract class UserUseCase implements IUserServicePort {
     @Override
     public AuthenticationResponse validateUser(AuthenticationRequest authenticationRequest) {
         return authenticationService.authenticate(authenticationRequest);
+    }
+
+    @Override
+    public OwnerResponse findOwnerById(Long ownerId) {
+        return userPersistencePort.findOwnerById(ownerId);
     }
 
     @Override

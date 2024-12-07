@@ -13,4 +13,5 @@ public interface IUserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByEmail(String email);
 
+    Optional<UserEntity> findByIdAndRolId(Long id, Long rolId);
 }

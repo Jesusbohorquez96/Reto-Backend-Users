@@ -111,4 +111,18 @@ public class UsersRestController {
         usersHandler.deleteFromUser(userId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @Operation(summary = "Validate Owner ID", description = "Validates if a user with the given ID has the role of owner.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Owner ID is valid"),
+            @ApiResponse(responseCode = "404", description = "Owner ID is not valid")
+    })
+    @GetMapping(VALIDATE_OWNER)
+    public ResponseEntity<OwnerResponse> validateOwner(@PathVariable Long ownerId) {
+        OwnerResponse ownerResponse = usersHandler.getOwnerInfo(ownerId);
+        if (ownerResponse == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(ownerResponse);
+    }
 }

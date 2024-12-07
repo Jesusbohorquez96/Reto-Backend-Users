@@ -41,4 +41,9 @@ public class UsersHandler implements IUsersHandler {
     public void registerUser(RegisterRequest registerRequest) {
         userServicePort.registerUser(registerRequest);
     }
+
+    @Override
+    public OwnerResponse getOwnerInfo(Long ownerId) {
+        return userServicePort.findOwnerById(ownerId);
+    }
 }
