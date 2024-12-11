@@ -1,12 +1,12 @@
 package com.jbohorquez.microservices_users.domain.usecase;
 
-import com.jbohorquez.microservices_users.application.dto.AuthenticationRequest;
-import com.jbohorquez.microservices_users.application.dto.AuthenticationResponse;
-import com.jbohorquez.microservices_users.application.dto.OwnerResponse;
-import com.jbohorquez.microservices_users.application.dto.RegisterRequest;
+import com.jbohorquez.microservices_users.application.dto.*;
 import com.jbohorquez.microservices_users.constants.ValidationConstants;
 import com.jbohorquez.microservices_users.domain.api.IUserServicePort;
+import com.jbohorquez.microservices_users.domain.model.Employee;
 import com.jbohorquez.microservices_users.domain.model.User;
+import com.jbohorquez.microservices_users.domain.spi.EmployeePersistencePort;
+import com.jbohorquez.microservices_users.domain.spi.IPlazoletaPort;
 import com.jbohorquez.microservices_users.domain.spi.UserPersistencePort;
 import com.jbohorquez.microservices_users.infrastructure.adapters.securityconfig.IAuthenticationService;
 
@@ -14,15 +14,18 @@ import java.util.List;
 
 import static com.jbohorquez.microservices_users.constants.ValidationConstants.*;
 
-public abstract class UserUseCase implements IUserServicePort {
+public class UserUseCase implements IUserServicePort {
 
     private final UserPersistencePort userPersistencePort;
     private final IAuthenticationService authenticationService;
+    private final EmployeePersistencePort employeePersistencePort;
+    private final IPlazoletaPort plazoletaPort;
 
-    public UserUseCase(UserPersistencePort userPersistencePort, IAuthenticationService authenticationService) {
+    public UserUseCase(UserPersistencePort userPersistencePort, IAuthenticationService authenticationService, EmployeePersistencePort employeePersistencePort, IPlazoletaPort plazoletaPort) {
         this.userPersistencePort = userPersistencePort;
         this.authenticationService = authenticationService;
-
+        this.employeePersistencePort = employeePersistencePort;
+        this.plazoletaPort = plazoletaPort;
     }
 
     @Override
@@ -55,6 +58,27 @@ public abstract class UserUseCase implements IUserServicePort {
 
         authenticationService.register(registerRequest);
     }
+
+    @Override
+    public void registerEmployeeRest(UserEmployeeRequest userEmployeeRequest, Long userId) {
+        IdRestaurantResponse restaurant = plazoletaPort.findRestaurantById(userEmployeeRequest.getRestaurantId()).orElseThrow();
+        if ( !restaurant.getOwnerId().equals(userId) ) {
+            throw new IllegalArgumentException("RESTAURANT_NOT_FOUND");
+        }
+
+        Long registerEmployee = authenticationService.register(userEmployeeRequest);
+
+        Employee employee = new Employee();
+        employee.setRestaurantId(restaurant.getRestaurantId());
+        employee.setUserId(registerEmployee);
+        employeePersistencePort.registerEmployeeRest(employee);
+    }
+
+    @Override
+    public Employee findEmployeeId(Long employeeId) {
+        return employeePersistencePort.findById(employeeId);
+    }
+
 
     private void validateMandatoryFields(RegisterRequest registerRequest) {
         validateRequiredField(registerRequest.getName(), NAME_REQUIRED);

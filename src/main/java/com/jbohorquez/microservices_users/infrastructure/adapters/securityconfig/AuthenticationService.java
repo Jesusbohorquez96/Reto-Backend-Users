@@ -41,7 +41,7 @@ public class AuthenticationService implements IAuthenticationService {
     }
 
     @Override
-    public void register(RegisterRequest registerRequest) {
+    public Long register(RegisterRequest registerRequest) {
         RolEntity rol = RolEntity.builder()
                 .id(registerRequest.getRol())
                 .build();
@@ -62,5 +62,6 @@ public class AuthenticationService implements IAuthenticationService {
         AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+        return user.getId();
     }
 }

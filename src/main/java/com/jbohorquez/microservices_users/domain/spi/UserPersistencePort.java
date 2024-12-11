@@ -12,5 +12,6 @@ public interface UserPersistencePort {
         void deleteUser(Long userId);
 
         OwnerResponse findOwnerById(Long ownerId);
+
 }
 

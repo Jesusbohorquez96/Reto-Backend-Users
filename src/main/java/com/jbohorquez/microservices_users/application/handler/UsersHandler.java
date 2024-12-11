@@ -1,6 +1,7 @@
 package com.jbohorquez.microservices_users.application.handler;
 
 import com.jbohorquez.microservices_users.application.dto.*;
+import com.jbohorquez.microservices_users.application.mapper.UserRequestMapper;
 import com.jbohorquez.microservices_users.application.mapper.UserResponseMapper;
 import com.jbohorquez.microservices_users.domain.api.IUserServicePort;
 import com.jbohorquez.microservices_users.domain.model.User;
@@ -18,6 +19,7 @@ public class UsersHandler implements IUsersHandler {
 
     private final UserResponseMapper userResponseMapper;
     private final IUserServicePort userServicePort;
+    private final UserRequestMapper userRequestMapper;
 
     @Override
     public List<UserResponse> getFromUser() {
@@ -40,6 +42,16 @@ public class UsersHandler implements IUsersHandler {
     @Override
     public void registerUser(RegisterRequest registerRequest) {
         userServicePort.registerUser(registerRequest);
+    }
+
+    @Override
+    public void registerEmployeeRest(UserEmployeeRequest userEmployeeRequest, Long userId) {
+        userServicePort.registerEmployeeRest(userEmployeeRequest, userId);
+    }
+
+    @Override
+    public EmployeeRestaurantIdResponse getEmployeeInfo(Long employeeId) {
+      return userResponseMapper.toEmployeeRestaurantIdResponse(userServicePort.findEmployeeId(employeeId));
     }
 
     @Override

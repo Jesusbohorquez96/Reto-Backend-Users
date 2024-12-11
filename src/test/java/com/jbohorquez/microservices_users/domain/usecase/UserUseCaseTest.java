@@ -4,6 +4,8 @@ import com.jbohorquez.microservices_users.application.dto.AuthenticationRequest;
 import com.jbohorquez.microservices_users.application.dto.AuthenticationResponse;
 import com.jbohorquez.microservices_users.application.dto.RegisterRequest;
 import com.jbohorquez.microservices_users.domain.model.User;
+import com.jbohorquez.microservices_users.domain.spi.EmployeePersistencePort;
+import com.jbohorquez.microservices_users.domain.spi.IPlazoletaPort;
 import com.jbohorquez.microservices_users.domain.spi.UserPersistencePort;
 import com.jbohorquez.microservices_users.infrastructure.adapters.securityconfig.IAuthenticationService;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,12 +26,18 @@ class UserUseCaseTest {
     @Mock
     private IAuthenticationService authenticationService;
 
+    @Mock
+    private EmployeePersistencePort employeePersistencePort;
+
+    @Mock
+    private IPlazoletaPort plazoletaPort;
+
     private UserUseCase userUseCase;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        userUseCase = new UserUseCase(userPersistencePort, authenticationService) {};
+        userUseCase = new UserUseCase(userPersistencePort, authenticationService, employeePersistencePort, plazoletaPort) {};
     }
 
     @Test

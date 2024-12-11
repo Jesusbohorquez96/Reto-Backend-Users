@@ -7,6 +7,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
@@ -75,6 +77,17 @@ public class JwtService {
             e.printStackTrace();
             return Jwts.claims();
         }
+    }
+
+    public String getJwt() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object credentials = authentication.getCredentials();
+            if (credentials != null) {
+                return credentials.toString();
+            }
+        }
+        throw new IllegalStateException("JWT not found in SecurityContext");
     }
 }
 

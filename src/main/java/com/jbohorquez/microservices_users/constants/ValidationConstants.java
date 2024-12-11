@@ -67,6 +67,7 @@ public class ValidationConstants {
     public static final String USER_MUST_BE_ADULT = "User must be at least 18 years old";
     public static final String USER_NOT_FOUND = "User must be an adult";
     public static final String USER_NOT_FOUND_MESSAGE = "User not found";
+    public static final String EMPLOYEE_ID_REQUIRED = "Employee id is required";
 
     public static final String USER_ID_TARGET = "userId";
     public static final String USER_NAME_TARGET = "userName";

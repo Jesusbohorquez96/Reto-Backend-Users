@@ -8,5 +8,5 @@ public interface IAuthenticationService {
 
     AuthenticationResponse authenticate(AuthenticationRequest request);
 
-    void register(RegisterRequest registerRequest);
+    Long register(RegisterRequest registerRequest);
 }

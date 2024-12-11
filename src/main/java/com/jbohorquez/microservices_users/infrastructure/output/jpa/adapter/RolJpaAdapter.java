@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-
 @RequiredArgsConstructor
 public class RolJpaAdapter implements RolPersistencePort {
 

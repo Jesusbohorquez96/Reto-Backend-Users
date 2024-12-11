@@ -21,6 +21,7 @@ import static com.jbohorquez.microservices_users.constants.ValidationConstants.*
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class UserEntity implements UserDetails {
 
     @Id

@@ -16,4 +16,8 @@ public interface IUsersHandler {
 
     void registerUser(RegisterRequest registerRequest);
 
+    void registerEmployeeRest(UserEmployeeRequest userEmployeeRequest, Long userId);
+
+
+    EmployeeRestaurantIdResponse getEmployeeInfo(Long employeeId);
 }
