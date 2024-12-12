@@ -6,9 +6,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "plazoleta-service", url = "http://localhost:8086/restaurants")
+import static com.jbohorquez.microservices_users.constants.ValidationConstants.*;
+
+@FeignClient(name = MICROSERVICE_PLAZOLETA, url = HTTP_RESTAURANTS)
 public interface PlazoletaFeignClient {
 
-    @GetMapping(value = "/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = EMPLOYEE_ID, consumes = MediaType.APPLICATION_JSON_VALUE)
     IdRestaurantResponse findRestaurantById(@PathVariable Long restaurantId);
 }

@@ -10,6 +10,8 @@ import com.jbohorquez.microservices_users.infrastructure.output.jpa.repository.I
 import lombok.RequiredArgsConstructor;
 import java.util.List;
 
+import static com.jbohorquez.microservices_users.constants.ValidationConstants.*;
+
 @RequiredArgsConstructor
 public class UserJpaAdapter implements UserPersistencePort {
 
@@ -32,7 +34,7 @@ public class UserJpaAdapter implements UserPersistencePort {
 
     @Override
     public OwnerResponse findOwnerById(Long ownerId) {
-        return userRepository.findByIdAndRolId(ownerId, 2L)
+        return userRepository.findByIdAndRolId(ownerId, OWNER)
                 .map(userEntityMapper::toOwnerResponse)
                 .orElse(null);
     }

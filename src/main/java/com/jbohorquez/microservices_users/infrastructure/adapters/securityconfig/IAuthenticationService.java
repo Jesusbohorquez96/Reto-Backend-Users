@@ -4,7 +4,7 @@ import com.jbohorquez.microservices_users.application.dto.AuthenticationRequest;
 import com.jbohorquez.microservices_users.application.dto.AuthenticationResponse;
 import com.jbohorquez.microservices_users.application.dto.RegisterRequest;
 
-public interface IAuthenticationService {
+public interface  IAuthenticationService {
 
     AuthenticationResponse authenticate(AuthenticationRequest request);
 

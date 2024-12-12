@@ -127,6 +127,18 @@ public class ValidationConstants {
     public static final String USER_ID = "/{userId}";
     public static final String ROL_ID = "/{rolId}";
 
+    public static final String MICROSERVICE_PLAZOLETA = "plazoleta-service";
+    public static final String HTTP_RESTAURANTS = "http://localhost:8086/restaurants";
+    public static final String EMPLOYEE_ID = "/{employeeId}";
+    public static final String EMPLOYEES = "employees";
+    public static final String RESTAURANT_ID = "restaurant_id";
+
+    //"userEntity"
+    public static final String USER_ENTITY = "userEntity";
+    public static final String USER_ENTITY_ID = "userEntity.id";
+
+    public static final String ID_USER = "user_id";
+
     public static final String ROL_ADMIN = "hasAnyRole('admin')";
     public static final String ROL_OWNER = "hasAnyRole('propietario')";
 

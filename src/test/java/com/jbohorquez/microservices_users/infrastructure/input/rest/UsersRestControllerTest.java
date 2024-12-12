@@ -1,119 +1,90 @@
 package com.jbohorquez.microservices_users.infrastructure.input.rest;
 
-import com.jbohorquez.microservices_users.application.dto.RegisterRequest;
-import com.jbohorquez.microservices_users.application.dto.UserResponse;
+import com.jbohorquez.microservices_users.application.dto.*;
 import com.jbohorquez.microservices_users.application.handler.IUsersHandler;
-import com.jbohorquez.microservices_users.infrastructure.exceptionhandler.ExceptionResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.test.context.support.WithMockUser;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static com.jbohorquez.microservices_users.constants.ValidationConstants.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UsersRestControllerTest {
 
-    @InjectMocks
-    private UsersRestController usersRestController;
-
-    @Mock
     private IUsersHandler usersHandler;
+    private UsersRestController usersRestController;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        usersHandler = mock(IUsersHandler.class);
+        usersRestController = new UsersRestController(usersHandler);
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
-    void getFromUser_ShouldReturnOkWithListOfUsers() {
-        List<UserResponse> userList = new ArrayList<>();
-        userList.add(new UserResponse());
+    void getFromUser_shouldReturnListOfUsers() {
+        List<UserResponse> userList = List.of(new UserResponse());
         when(usersHandler.getFromUser()).thenReturn(userList);
 
         ResponseEntity<List<UserResponse>> response = usersRestController.getFromUser();
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(200, response.getStatusCodeValue());
         assertEquals(userList, response.getBody());
+        verify(usersHandler, times(1)).getFromUser();
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
-    void registerAdmin_ShouldReturnCreatedWhenUserCreatedSuccessfully() {
-        RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.setEmail("admin@example.com");
-        registerRequest.setPassword("password");
-        registerRequest.setRol(ADMIN);
-        doNothing().when(usersHandler).registerUser(registerRequest);
+    void deleteFromUser_shouldCallHandler() {
+        ResponseEntity<Void> response = usersRestController.deleteFromUser(1L);
 
-        ResponseEntity<?> response = usersRestController.registerAdmin(registerRequest);
-
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(Collections.singletonMap(MESSAGE, ExceptionResponse.SUCCESSFUL_CREATION.getMessage()), response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+        verify(usersHandler, times(1)).deleteFromUser(1L);
     }
 
     @Test
-    void registerCustomer_ShouldReturnCreatedWhenCustomerCreatedSuccessfully() {
-        RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.setEmail("customer@example.com");
-        registerRequest.setPassword("password");
-        registerRequest.setRol(CUSTOMER);
-        doNothing().when(usersHandler).registerUser(registerRequest);
+    void validateOwner_shouldReturnOwnerResponseIfExists() {
+        OwnerResponse ownerResponse = new OwnerResponse();
+        when(usersHandler.getOwnerInfo(1L)).thenReturn(ownerResponse);
 
-        ResponseEntity<?> response = usersRestController.registerCustomer(registerRequest);
+        ResponseEntity<OwnerResponse> response = usersRestController.validateOwner(1L);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(Collections.singletonMap(MESSAGE, ExceptionResponse.SUCCESSFUL_CREATION.getMessage()), response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(ownerResponse, response.getBody());
+        verify(usersHandler, times(1)).getOwnerInfo(1L);
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
-    void registerOwner_ShouldReturnCreatedWhenOwnerCreatedSuccessfully() {
-        RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.setEmail("owner@example.com");
-        registerRequest.setPassword("password");
-        registerRequest.setRol(OWNER);
-        doNothing().when(usersHandler).registerUser(registerRequest);
+    void validateOwner_shouldReturnNotFoundIfNotExists() {
+        when(usersHandler.getOwnerInfo(1L)).thenReturn(null);
 
-        ResponseEntity<?> response = usersRestController.registerOwner(registerRequest);
+        ResponseEntity<OwnerResponse> response = usersRestController.validateOwner(1L);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(Collections.singletonMap(MESSAGE, ExceptionResponse.SUCCESSFUL_CREATION.getMessage()), response.getBody());
+        assertEquals(404, response.getStatusCodeValue());
+        assertNull(response.getBody());
+        verify(usersHandler, times(1)).getOwnerInfo(1L);
     }
 
     @Test
-    @WithMockUser(roles = "OWNER")
-    void registerEmployee_ShouldReturnCreatedWhenEmployeeCreatedSuccessfully() {
-        RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.setEmail("employee@example.com");
-        registerRequest.setPassword("password");
-        registerRequest.setRol(EMPLOYEE);
-        doNothing().when(usersHandler).registerUser(registerRequest);
+    void validateEmployee_shouldReturnEmployeeResponseIfExists() {
+        EmployeeRestaurantIdResponse employeeResponse = new EmployeeRestaurantIdResponse();
+        when(usersHandler.getEmployeeInfo(1L)).thenReturn(employeeResponse);
 
-        ResponseEntity<?> response = usersRestController.registerEmployee(registerRequest);
+        ResponseEntity<EmployeeRestaurantIdResponse> response = usersRestController.validateEmployee(1L);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(Collections.singletonMap(MESSAGE, ExceptionResponse.SUCCESSFUL_CREATION.getMessage()), response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(employeeResponse, response.getBody());
+        verify(usersHandler, times(1)).getEmployeeInfo(1L);
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
-    void deleteFromUser_ShouldReturnOkWhenUserDeletedSuccessfully() {
-        Long userId = 1L;
-        doNothing().when(usersHandler).deleteFromUser(userId);
+    void validateEmployee_shouldReturnNotFoundIfNotExists() {
+        when(usersHandler.getEmployeeInfo(1L)).thenReturn(null);
 
-        ResponseEntity<Void> response = usersRestController.deleteFromUser(userId);
+        ResponseEntity<EmployeeRestaurantIdResponse> response = usersRestController.validateEmployee(1L);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(404, response.getStatusCodeValue());
+        assertNull(response.getBody());
+        verify(usersHandler, times(1)).getEmployeeInfo(1L);
     }
 }

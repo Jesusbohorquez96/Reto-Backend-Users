@@ -1,14 +1,11 @@
 package com.jbohorquez.microservices_users.infrastructure.output.jpa.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
+import lombok.*;
 import javax.persistence.*;
+import static com.jbohorquez.microservices_users.constants.ValidationConstants.*;
 
 @Entity
-@Table(name = "employees")
+@Table(name = EMPLOYEES)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,9 +17,9 @@ public class EmployeeEntity {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = ID_USER, nullable = false)
     private UserEntity userEntity;
 
-    @Column(name = "restaurant_id", nullable = false)
+    @Column(name = RESTAURANT_ID, nullable = false)
     private Long restaurantId;
 }

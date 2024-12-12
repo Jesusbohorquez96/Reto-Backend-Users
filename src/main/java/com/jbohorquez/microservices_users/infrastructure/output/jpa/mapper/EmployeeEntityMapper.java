@@ -7,17 +7,17 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
-import static com.jbohorquez.microservices_users.constants.ValidationConstants.SPRING;
+import static com.jbohorquez.microservices_users.constants.ValidationConstants.*;
 
 @Mapper(componentModel = SPRING,
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface EmployeeEntityMapper {
 
-    @Mapping(source = "userId", target = "userEntity")
+    @Mapping(source = USER_ID_TARGET, target = USER_ENTITY)
     EmployeeEntity toEntity(Employee employee);
 
-    @Mapping(source = "userEntity.id", target = "userId")
+    @Mapping(source = USER_ENTITY_ID, target = USER_ID_TARGET)
     Employee toDomain(EmployeeEntity employeeEntity);
 
 
