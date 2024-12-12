@@ -7,13 +7,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -21,6 +22,7 @@ import static com.jbohorquez.microservices_users.constants.ValidationConstants.*
 
 @Service
 public class JwtService {
+
     private static final String SECRET_KEY = PRIVATE;
 
     public String generateToken(
@@ -54,17 +56,13 @@ public class JwtService {
 
     public String generate(UserEntity userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(ROL, List.of(userDetails.getRol().getId()));
+        claims.put(ROL, userDetails.getRol().getName());
         return generateToken(claims, userDetails);
     }
 
     public boolean isTokenValid(String token, UserEntity userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(String.valueOf(userDetails.getId()))  && !isTokenExpired(token));
-    }
-
-    private boolean isTokenExpired(String token) {
-        return extractClaim(token, Claims::getExpiration).before(new Date());
+        return (username.equals(String.valueOf(userDetails.getId())));
     }
 
     private Claims extractAllClaims(String token) throws SignatureException {
@@ -79,6 +77,17 @@ public class JwtService {
             e.printStackTrace();
             return Jwts.claims();
         }
+    }
+
+    public String getJwt() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object credentials = authentication.getCredentials();
+            if (credentials != null) {
+                return credentials.toString();
+            }
+        }
+        throw new IllegalStateException("JWT not found in SecurityContext");
     }
 }
 

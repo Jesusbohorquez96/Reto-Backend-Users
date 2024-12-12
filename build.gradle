@@ -21,40 +21,44 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-devtools'
-
 	implementation 'org.mapstruct:mapstruct:1.5.2.Final'
-	implementation 'org.hibernate.validator:hibernate-validator:6.2.4.Final'
-
-	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'mysql:mysql-connector-java:8.0.33'
 
 	implementation "org.springframework.security:spring-security-crypto"
 
+	implementation "org.springframework.security:spring-security-crypto"
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
 	compileOnly 'org.projectlombok:lombok'
-	implementation 'org.springframework.boot:spring-boot-starter-logging'
 
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
 
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2', 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 	testImplementation 'org.mockito:mockito-core'
 	testImplementation 'org.mockito:mockito-junit-jupiter'
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-	testImplementation "org.springframework.security:spring-security-test"
 
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
-	testImplementation 'org.hibernate.validator:hibernate-validator:6.2.0.final'
-	implementation 'org.glassfish:jakarta.el:4.0.2'
-	testImplementation 'javax.validation:validation-api:2.0.1.Final'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+
+	testImplementation "org.springframework.security:spring-security-test"
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.7"
+	}
 }
 
 tasks.named('test') {
@@ -62,5 +66,6 @@ tasks.named('test') {
 }
 
 test {
+	useJUnitPlatform()
 	finalizedBy jacocoTestReport
 }

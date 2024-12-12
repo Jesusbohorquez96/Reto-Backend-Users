@@ -1,5 +1,6 @@
 package com.jbohorquez.microservices_users.infrastructure.output.jpa.mapper;
 
+import com.jbohorquez.microservices_users.application.dto.OwnerResponse;
 import com.jbohorquez.microservices_users.domain.model.User;
 import com.jbohorquez.microservices_users.infrastructure.output.jpa.entity.UserEntity;
 import org.mapstruct.Mapper;
@@ -18,4 +19,5 @@ public interface UserEntityMapper {
 
     List<User> toUserList(List<UserEntity> userEntityList);
 
+    OwnerResponse toOwnerResponse(UserEntity userEntity);
 }

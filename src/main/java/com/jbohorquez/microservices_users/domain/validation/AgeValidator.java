@@ -1,4 +1,4 @@
-package com.jbohorquez.microservices_users.application.validation;
+package com.jbohorquez.microservices_users.domain.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

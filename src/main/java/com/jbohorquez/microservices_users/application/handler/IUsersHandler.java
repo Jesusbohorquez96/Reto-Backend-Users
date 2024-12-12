@@ -10,8 +10,14 @@ public interface IUsersHandler {
 
     void deleteFromUser(Long userId);
 
+    OwnerResponse getOwnerInfo(Long ownerId);
+
     AuthenticationResponse validateUser(AuthenticationRequest authenticationRequest);
 
     void registerUser(RegisterRequest registerRequest);
 
+    void registerEmployeeRest(UserEmployeeRequest userEmployeeRequest, Long userId);
+
+
+    EmployeeRestaurantIdResponse getEmployeeInfo(Long employeeId);
 }

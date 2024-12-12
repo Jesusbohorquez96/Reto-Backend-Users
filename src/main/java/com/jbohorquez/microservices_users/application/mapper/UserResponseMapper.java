@@ -1,6 +1,8 @@
 package com.jbohorquez.microservices_users.application.mapper;
 
+import com.jbohorquez.microservices_users.application.dto.EmployeeRestaurantIdResponse;
 import com.jbohorquez.microservices_users.application.dto.UserResponse;
+import com.jbohorquez.microservices_users.domain.model.Employee;
 import com.jbohorquez.microservices_users.domain.model.Rol;
 import com.jbohorquez.microservices_users.domain.model.User;
 import org.mapstruct.Mapper;
@@ -32,4 +34,7 @@ public interface UserResponseMapper {
         }
         return rol.getName();
     }
+
+    @Mapping(target = "restaurantId", source = "restaurantId")
+    EmployeeRestaurantIdResponse toEmployeeRestaurantIdResponse(Employee employee);
 }

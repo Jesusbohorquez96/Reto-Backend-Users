@@ -1,5 +1,8 @@
 package com.jbohorquez.microservices_users.infrastructure.configuration;
 
+import com.jbohorquez.microservices_users.domain.api.IUserServicePort;
+import com.jbohorquez.microservices_users.domain.spi.EmployeePersistencePort;
+import com.jbohorquez.microservices_users.domain.spi.IPlazoletaPort;
 import com.jbohorquez.microservices_users.domain.spi.UserPersistencePort;
 import com.jbohorquez.microservices_users.domain.usecase.UserUseCase;
 import com.jbohorquez.microservices_users.infrastructure.adapters.securityconfig.IAuthenticationService;
@@ -9,7 +12,6 @@ import com.jbohorquez.microservices_users.infrastructure.output.jpa.repository.I
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
@@ -17,6 +19,9 @@ public class BeanConfigurationUser {
 
     private final IUserRepository userRepository;
     private final UserEntityMapper userEntityMapper;
+    private final EmployeePersistencePort employeePersistencePort;
+    private final IPlazoletaPort plazoletaPort;
+    private final IAuthenticationService authenticationService;
 
     @Bean
     public UserPersistencePort userPersistencePort() {
@@ -24,8 +29,13 @@ public class BeanConfigurationUser {
     }
 
     @Bean
-    public UserUseCase userUseCase(UserPersistencePort userPersistencePort, IAuthenticationService authenticationService) {
-        return new UserUseCase(userPersistencePort, authenticationService) {
+    public IUserServicePort userServicePort(UserPersistencePort userPersistencePort) {
+        return new UserUseCase(
+                userPersistencePort,
+                authenticationService,
+                employeePersistencePort,
+                plazoletaPort
+        ) {
         };
     }
 }

@@ -2,7 +2,6 @@ package com.jbohorquez.microservices_users.infrastructure.output.jpa.adapter;
 
 import com.jbohorquez.microservices_users.domain.model.Rol;
 import com.jbohorquez.microservices_users.domain.spi.RolPersistencePort;
-import com.jbohorquez.microservices_users.infrastructure.exception.AlreadyExistsException;
 import com.jbohorquez.microservices_users.infrastructure.exception.NoDataFoundException;
 import com.jbohorquez.microservices_users.infrastructure.output.jpa.entity.RolEntity;
 import com.jbohorquez.microservices_users.infrastructure.output.jpa.mapper.RolEntityMapper;
@@ -10,7 +9,6 @@ import com.jbohorquez.microservices_users.infrastructure.output.jpa.repository.I
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-
 
 @RequiredArgsConstructor
 public class RolJpaAdapter implements RolPersistencePort {
